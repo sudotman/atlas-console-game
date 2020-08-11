@@ -11,7 +11,7 @@ public class Game{
 
     static int round=1;
     static String entered;
-    static ArrayList<String> results = new ArrayList<String>();
+    ArrayList<String> results = new ArrayList<String>();
     boolean notValid = false;
     char lastLetterCPU;
     char lastLetterUser;
@@ -59,21 +59,20 @@ public class Game{
             }
             else if(round>1){
                 if(st.equals(entered) && st.charAt(0) == lastLetterUser){
-                    Iterator<String> iterator = results.iterator();  
-                        while (iterator.hasNext()) {
-                            if(entered.equals(iterator.next())){
-                                System.out.println("hawww match");
-                                System.exit(0);
-                                break;
-                            }
-                            else{
-                                results.add(entered);
-                                lastLetterCPU= entered.charAt(entered.length()-1); //last letter
-                                notValid=false;
-                                System.out.println("Correct word!\n");
-                                break;
-                            }
+                    for(int i=0;i<results.size(); i++){
+                        if(entered.equals(results.get(i))){
+                            System.out.println("hawww match");
+                            System.exit(0);
+                            break;
                         }
+                        else{
+                            results.add(entered);
+                            lastLetterCPU= entered.charAt(entered.length()-1); //last letter
+                            notValid=false;
+                            System.out.println("Correct word!\n");
+                            break;
+                        }
+                    }
                     
                 }
             }
@@ -93,11 +92,12 @@ public class Game{
             while((output=br2.readLine())!= null){
                 if(output.charAt(0) == lastLetterCPU){
                     if(results.isEmpty() == false){
-                        Iterator<String> iterator = results.iterator();  
-                        while (iterator.hasNext()) {
-                            if(output.equals(iterator.next())){
+                        for(int i=0;i<results.size();i++){
+                            System.out.println(i);
+                            if(output.equals(results.get(i))){
                                 System.out.println("hawww match");
                                 continue outerloop;
+                                
                             }
                             else{
                                 OutputAWord(output);
@@ -105,7 +105,7 @@ public class Game{
                             }
                         }
                     }
-                    else{
+                    else if(round ==1){
                         OutputAWord(output);
                         break;
                     }
